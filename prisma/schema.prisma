@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+
+  profile           studentProfile?
+  savedScholarships SavedScholarship[]
+  applications      Application[]
+  role String @default("STUDENT")
+}
+
+model studentProfile {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @unique @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  state        String?
+  category     String?
+  course       String?
+  year         String?
+  percentage   Float?
+  familyIncome Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model scholarship {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title       String
+  provider    String
+  description String?
+
+  state    String?
+  category String?
+  course   String?
+  year     String?
+
+  minPercentage Float?
+  maxIncome     Float?
+
+  amount          Float?
+  deadline        DateTime?
+  applicationLink String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  savedBy      SavedScholarship[]
+  applications Application[]
+}
+
+model SavedScholarship {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId        String @db.ObjectId
+  scholarshipId String @db.ObjectId
+
+  user        User        @relation(fields: [userId], references: [id])
+  scholarship scholarship @relation(fields: [scholarshipId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, scholarshipId])
+}
+
+model Application {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId        String @db.ObjectId
+  scholarshipId String @db.ObjectId
+
+  user        User        @relation(fields: [userId], references: [id])
+  scholarship scholarship @relation(fields: [scholarshipId], references: [id])
+
+  status    String   @default("Applied")
+  appliedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, scholarshipId])
+}
