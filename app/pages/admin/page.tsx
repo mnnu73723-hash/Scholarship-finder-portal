@@ -1,6 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Award, Users, FileText, MessageSquare } from "lucide-react";
+
+interface Stats {
+  totalScholarships: number;
+  totalUsers: number;
+  totalApplications: number;
+  totalMessages: number;
+}
 
 export default function AdminPage() {
   const [formData, setFormData] = useState({
@@ -20,6 +28,21 @@ export default function AdminPage() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [statsLoading, setStatsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/admin/stats")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setStats(data.stats);
+        }
+        setStatsLoading(false);
+      })
+      .catch(() => setStatsLoading(false));
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -70,6 +93,13 @@ export default function AdminPage() {
         deadline: "",
         applicationLink: "",
       });
+
+      // Refresh stats after adding a new scholarship
+      fetch("/api/admin/stats")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) setStats(data.stats);
+        });
     } catch (error) {
       console.error("Admin Error:", error);
       setMessage("Network error. Please try again.");
@@ -78,14 +108,62 @@ export default function AdminPage() {
     }
   };
 
+  const statCards = [
+    {
+      label: "Total Scholarships",
+      value: stats?.totalScholarships,
+      icon: Award,
+      color: "bg-blue-50 text-blue-600",
+    },
+    {
+      label: "Total Students",
+      value: stats?.totalUsers,
+      icon: Users,
+      color: "bg-purple-50 text-purple-600",
+    },
+    {
+      label: "Total Applications",
+      value: stats?.totalApplications,
+      icon: FileText,
+      color: "bg-green-50 text-green-600",
+    },
+    {
+      label: "Contact Messages",
+      value: stats?.totalMessages,
+      icon: MessageSquare,
+      color: "bg-orange-50 text-orange-600",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-10">
 
-      <div className="mx-auto max-w-3xl rounded-xl bg-white p-8 shadow-lg">
+      {/* Stats Cards */}
+      <div className="mx-auto max-w-3xl mb-8">
+        <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
-        <h1 className="text-center text-3xl font-bold">
-          Admin Dashboard
-        </h1>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {statCards.map((card) => {
+            const Icon = card.icon;
+            return (
+              <div
+                key={card.label}
+                className="bg-white rounded-xl border border-gray-200 p-4"
+              >
+                <div className={`inline-flex p-2 rounded-lg mb-3 ${card.color}`}>
+                  <Icon size={20} />
+                </div>
+                <p className="text-2xl font-bold text-gray-900">
+                  {statsLoading ? "..." : card.value ?? 0}
+                </p>
+                <p className="text-sm text-gray-500">{card.label}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-3xl rounded-xl bg-white p-8 shadow-lg">
 
         <p className="mt-2 mb-8 text-center text-gray-500">
           Add New Scholarship

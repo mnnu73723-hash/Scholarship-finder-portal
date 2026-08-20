@@ -545,15 +545,28 @@ export default function AdminScholarshipPage() {
 
                     {/* DELETE */}
 
-                    <button
-                      type="button"
-                      onClick={() =>
-                        deleteScholarship(scholarship.id)
-                      }
-                      className="mt-3 w-full rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-center font-semibold text-rose-500 transition hover:bg-rose-100"
-                    >
-                      🗑️ Delete Scholarship
-                    </button>
+                    <div className="mt-3 flex gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          router.push(
+                            `/pages/admin/scholarship/edit/${scholarship.id}`
+                          )
+                        }
+                        className="flex-1 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-center font-semibold text-blue-500 transition hover:bg-blue-100"
+                      >
+                        ✏️ Edit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          deleteScholarship(scholarship.id)
+                        }
+                        className="flex-1 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-center font-semibold text-rose-500 transition hover:bg-rose-100"
+                      >
+                        🗑️ Delete
+                      </button>
+                    </div>
 
                   </div>
 
