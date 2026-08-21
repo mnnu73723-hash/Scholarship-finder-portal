@@ -34,9 +34,7 @@ export default function EligibilityPage() {
   const [error, setError] = useState("");
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setFormData({
       ...formData,
@@ -44,9 +42,7 @@ export default function EligibilityPage() {
     });
   };
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setLoading(true);
@@ -69,9 +65,7 @@ export default function EligibilityPage() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(
-          data.message || "Unable to check eligibility."
-        );
+        setError(data.message || "Unable to check eligibility.");
         return;
       }
 
@@ -79,51 +73,187 @@ export default function EligibilityPage() {
       setSearched(true);
     } catch (error) {
       console.error("Eligibility Error:", error);
-      setError(
-        "Something went wrong. Please try again."
-      );
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 px-4 py-10">
+    <div className="min-h-screen bg-[#05070A] text-white">
 
-      <div className="mx-auto max-w-6xl">
+      {/* =========================================================
+          HEADER
+      ========================================================= */}
 
-        {/* Header */}
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#080B10]/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center px-4 py-4 sm:px-6 lg:px-8">
 
-        <div className="mb-10 text-center">
+          <div className="flex items-center gap-3">
 
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-3xl shadow-lg">
-            🎓
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-500/10 text-2xl">
+              🎓
+            </div>
+
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-400">
+                Student Portal
+              </p>
+
+              <h1 className="text-lg font-bold text-white">
+                Eligibility Checker
+              </h1>
+            </div>
+
           </div>
 
-          <h1 className="text-4xl font-extrabold text-gray-900">
-            Scholarship Eligibility Checker
-          </h1>
+        </div>
+      </header>
 
-          <p className="mx-auto mt-3 max-w-2xl text-gray-600">
-            Enter your academic and personal details
-            to find scholarships you may be eligible for.
+      {/* =========================================================
+          MAIN
+      ========================================================= */}
+
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+
+        {/* =======================================================
+            HERO
+        ======================================================= */}
+
+        <section className="relative mb-8 overflow-hidden rounded-2xl border border-white/10 bg-[#0B0F15] shadow-2xl">
+
+          {/* Glow */}
+
+          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
+
+          <div className="grid lg:grid-cols-[1.5fr_0.5fr]">
+
+            <div className="relative p-7 sm:p-10">
+
+              {/* Badge */}
+
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-400">
+
+                <span className="h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]" />
+
+                Smart Matching
+
+              </div>
+
+              {/* Heading */}
+
+              <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+
+                Check Your Scholarship
+
+                <span className="block text-blue-400">
+                  Eligibility
+                </span>
+
+              </h2>
+
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
+
+                Enter your academic and financial details. Our system will
+                match your profile with available scholarship opportunities.
+
+              </p>
+
+              {/* Small Info */}
+
+              <div className="mt-6 flex flex-wrap gap-3">
+
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+
+                  <p className="text-[10px] uppercase tracking-wider text-slate-500">
+                    Matching
+                  </p>
+
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    Smart Search
+                  </p>
+
+                </div>
+
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+
+                  <p className="text-[10px] uppercase tracking-wider text-slate-500">
+                    Results
+                  </p>
+
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    Personalized
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* Hero Icon */}
+
+            <div className="flex items-center justify-center border-t border-white/10 bg-[#080C12] p-8 lg:border-l lg:border-t-0">
+
+              <div className="text-center">
+
+                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-3xl border border-blue-400/20 bg-blue-500/10 text-5xl shadow-[0_0_40px_rgba(59,130,246,0.08)]">
+                  🔍
+                </div>
+
+                <p className="mt-4 text-sm font-semibold text-white">
+                  Find Your Match
+                </p>
+
+                <p className="mt-1 text-xs text-slate-500">
+                  Personalized opportunities
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =======================================================
+            FORM TITLE
+        ======================================================= */}
+
+        <div className="mb-5">
+
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-400">
+            Student Information
+          </p>
+
+          <h2 className="mt-1 text-2xl font-bold text-white">
+            Enter Your Details
+          </h2>
+
+          <p className="mt-2 text-sm text-slate-500">
+            Complete all fields to receive accurate scholarship
+            recommendations.
           </p>
 
         </div>
 
-        {/* Form */}
+        {/* =======================================================
+            FORM
+        ======================================================= */}
 
-        <div className="rounded-2xl bg-white p-6 shadow-xl md:p-10">
+        <section className="rounded-2xl border border-white/10 bg-[#0B0F15] p-6 shadow-2xl md:p-8">
 
           <form
             onSubmit={handleSubmit}
             className="grid gap-6 md:grid-cols-2"
           >
 
-            {/* State */}
+            {/* STATE */}
 
             <div>
-              <label className="mb-2 block font-semibold text-gray-700">
+
+              <label className="mb-2 block text-sm font-semibold text-slate-300">
                 State
               </label>
 
@@ -132,23 +262,16 @@ export default function EligibilityPage() {
                 value={formData.state}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl border border-gray-300 bg-white p-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-white/10 bg-[#070A0F] px-4 py-3 text-sm text-slate-200 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-400/10"
               >
-                <option value="">
-                  Select State
-                </option>
 
-                <option value="Haryana">
-                  Haryana
-                </option>
+                <option value="">Select State</option>
 
-                <option value="Punjab">
-                  Punjab
-                </option>
+                <option value="Haryana">Haryana</option>
 
-                <option value="Delhi">
-                  Delhi
-                </option>
+                <option value="Punjab">Punjab</option>
+
+                <option value="Delhi">Delhi</option>
 
                 <option value="Uttar Pradesh">
                   Uttar Pradesh
@@ -165,13 +288,16 @@ export default function EligibilityPage() {
                 <option value="All India">
                   All India
                 </option>
+
               </select>
+
             </div>
 
-            {/* Category */}
+            {/* CATEGORY */}
 
             <div>
-              <label className="mb-2 block font-semibold text-gray-700">
+
+              <label className="mb-2 block text-sm font-semibold text-slate-300">
                 Category
               </label>
 
@@ -180,11 +306,10 @@ export default function EligibilityPage() {
                 value={formData.category}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl border border-gray-300 bg-white p-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-white/10 bg-[#070A0F] px-4 py-3 text-sm text-slate-200 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-400/10"
               >
-                <option value="">
-                  Select Category
-                </option>
+
+                <option value="">Select Category</option>
 
                 <option value="General">
                   General
@@ -205,13 +330,16 @@ export default function EligibilityPage() {
                 <option value="EWS">
                   EWS
                 </option>
+
               </select>
+
             </div>
 
-            {/* Course */}
+            {/* COURSE */}
 
             <div>
-              <label className="mb-2 block font-semibold text-gray-700">
+
+              <label className="mb-2 block text-sm font-semibold text-slate-300">
                 Course
               </label>
 
@@ -220,8 +348,9 @@ export default function EligibilityPage() {
                 value={formData.course}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl border border-gray-300 bg-white p-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-white/10 bg-[#070A0F] px-4 py-3 text-sm text-slate-200 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-400/10"
               >
+
                 <option value="">
                   Select Course
                 </option>
@@ -253,14 +382,17 @@ export default function EligibilityPage() {
                 <option value="MCA">
                   MCA
                 </option>
+
               </select>
+
             </div>
 
-            {/* Year */}
+            {/* YEAR */}
 
             <div>
-              <label className="mb-2 block font-semibold text-gray-700">
-                Current Year
+
+              <label className="mb-2 block text-sm font-semibold text-slate-300">
+                Current Academic Year
               </label>
 
               <select
@@ -268,8 +400,9 @@ export default function EligibilityPage() {
                 value={formData.year}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl border border-gray-300 bg-white p-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-white/10 bg-[#070A0F] px-4 py-3 text-sm text-slate-200 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-400/10"
               >
+
                 <option value="">
                   Select Year
                 </option>
@@ -289,14 +422,17 @@ export default function EligibilityPage() {
                 <option value="4th Year">
                   4th Year
                 </option>
+
               </select>
+
             </div>
 
-            {/* Percentage */}
+            {/* PERCENTAGE */}
 
             <div>
-              <label className="mb-2 block font-semibold text-gray-700">
-                Percentage
+
+              <label className="mb-2 block text-sm font-semibold text-slate-300">
+                Academic Percentage
               </label>
 
               <input
@@ -309,14 +445,16 @@ export default function EligibilityPage() {
                 value={formData.percentage}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl border border-gray-300 p-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-white/10 bg-[#070A0F] px-4 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-400/10"
               />
+
             </div>
 
-            {/* Family Income */}
+            {/* FAMILY INCOME */}
 
             <div>
-              <label className="mb-2 block font-semibold text-gray-700">
+
+              <label className="mb-2 block text-sm font-semibold text-slate-300">
                 Annual Family Income
               </label>
 
@@ -328,174 +466,371 @@ export default function EligibilityPage() {
                 value={formData.familyIncome}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl border border-gray-300 p-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-white/10 bg-[#070A0F] px-4 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-400/10"
               />
+
             </div>
 
-            {/* Button */}
+            {/* SUBMIT */}
 
-            <div className="md:col-span-2">
+            <div className="mt-2 md:col-span-2">
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 py-4 text-lg font-bold text-white shadow-lg transition hover:from-blue-700 hover:to-purple-700 disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex w-full items-center justify-center rounded-xl bg-blue-500 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-500/10 transition hover:bg-blue-400 hover:shadow-blue-500/20 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
               >
+
                 {loading
                   ? "Checking Eligibility..."
-                  : "🔍 Check Eligibility"}
+                  : "Check Eligibility"}
+
               </button>
 
             </div>
 
           </form>
 
-        </div>
+        </section>
 
-        {/* Error */}
+        {/* =======================================================
+            ERROR
+        ======================================================= */}
 
         {error && (
-          <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-center font-medium text-red-600">
-            {error}
-          </div>
-        )}
 
-        {/* Results */}
+          <div className="mt-6 rounded-xl border border-red-500/20 bg-red-500/10 p-5">
 
-        {searched && (
-          <div className="mt-10">
+            <div className="flex items-start gap-3">
 
-            <h2 className="mb-6 text-2xl font-bold text-gray-900">
-              🎓 Eligible Scholarships
-            </h2>
+              <div className="text-red-400">
+                ⚠
+              </div>
 
-            {scholarships.length === 0 ? (
-              <div className="rounded-2xl bg-white p-10 text-center shadow-lg">
+              <div>
 
-                <div className="text-5xl">
-                  😔
-                </div>
-
-                <h3 className="mt-4 text-xl font-bold">
-                  No Matching Scholarships Found
+                <h3 className="font-semibold text-red-300">
+                  Unable to Check Eligibility
                 </h3>
 
-                <p className="mt-2 text-gray-500">
-                  Try updating your profile details
-                  and check again.
+                <p className="mt-1 text-sm text-red-400">
+                  {error}
                 </p>
 
               </div>
+
+            </div>
+
+          </div>
+
+        )}
+
+        {/* =======================================================
+            RESULTS
+        ======================================================= */}
+
+        {searched && (
+
+          <section className="mt-10">
+
+            {/* RESULTS HEADER */}
+
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+
+              <div>
+
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-400">
+                  Results
+                </p>
+
+                <h2 className="mt-1 text-2xl font-bold text-white">
+                  Eligible Scholarships
+                </h2>
+
+                <p className="mt-2 text-sm text-slate-500">
+                  Scholarships matched with your profile.
+                </p>
+
+              </div>
+
+              {scholarships.length > 0 && (
+
+                <div className="inline-flex w-fit items-center gap-2 rounded-xl border border-blue-400/20 bg-blue-500/10 px-4 py-2">
+
+                  <span className="text-sm font-bold text-blue-400">
+                    {scholarships.length}
+                  </span>
+
+                  <span className="text-sm text-slate-400">
+                    Matches Found
+                  </span>
+
+                </div>
+
+              )}
+
+            </div>
+
+            {/* ===================================================
+                NO RESULTS
+            =================================================== */}
+
+            {scholarships.length === 0 ? (
+
+              <div className="rounded-2xl border border-white/10 bg-[#0B0F15] p-12 text-center shadow-xl">
+
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-[#070A0F] text-4xl">
+                  🔎
+                </div>
+
+                <h3 className="mt-6 text-xl font-bold text-white">
+                  No Matching Scholarships Found
+                </h3>
+
+                <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-slate-500">
+                  We could not find a scholarship matching your
+                  current details. Try reviewing your information
+                  and search again.
+                </p>
+
+              </div>
+
             ) : (
+
+              /* =================================================
+                 SCHOLARSHIP CARDS
+              ================================================= */
+
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 
                 {scholarships.map((scholarship) => (
-                  <div
+
+                  <article
                     key={scholarship.id}
-                    className="group rounded-2xl border border-gray-100 bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-2xl"
+                    className="group overflow-hidden rounded-2xl border border-white/10 bg-[#0B0F15] shadow-xl transition duration-300 hover:-translate-y-1 hover:border-blue-400/30 hover:shadow-2xl"
                   >
 
-                    <div className="mb-4 flex items-start justify-between">
+                    {/* TOP LINE */}
 
-                      <div className="rounded-xl bg-blue-100 p-3 text-2xl">
-                        🎓
+                    <div className="h-1 bg-blue-500" />
+
+                    <div className="p-6">
+
+                      {/* CARD HEADER */}
+
+                      <div className="flex items-start justify-between gap-4">
+
+                        <div className="min-w-0">
+
+                          <p className="text-xs font-bold uppercase tracking-[0.15em] text-blue-400">
+                            Scholarship
+                          </p>
+
+                          <h3 className="mt-2 text-xl font-bold leading-tight text-white">
+                            {scholarship.title}
+                          </h3>
+
+                          <p className="mt-2 text-sm font-semibold text-slate-400">
+                            {scholarship.provider}
+                          </p>
+
+                        </div>
+
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-500/10 text-xl">
+                          🎓
+                        </div>
+
                       </div>
 
+                      {/* AMOUNT */}
+
                       {scholarship.amount != null && (
-                        <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-bold text-green-700">
-                          ₹
-                          {scholarship.amount.toLocaleString(
-                            "en-IN"
-                          )}
-                        </span>
+
+                        <div className="mt-5 rounded-xl border border-emerald-400/15 bg-emerald-500/5 p-4">
+
+                          <p className="text-xs font-semibold uppercase tracking-wide text-emerald-400">
+                            Scholarship Amount
+                          </p>
+
+                          <p className="mt-1 text-2xl font-bold text-white">
+                            ₹
+                            {scholarship.amount.toLocaleString(
+                              "en-IN"
+                            )}
+                          </p>
+
+                        </div>
+
+                      )}
+
+                      {/* DESCRIPTION */}
+
+                      {scholarship.description && (
+
+                        <p className="mt-5 line-clamp-3 text-sm leading-6 text-slate-400">
+                          {scholarship.description}
+                        </p>
+
+                      )}
+
+                      <div className="my-5 border-t border-white/10" />
+
+                      {/* DETAILS */}
+
+                      <div className="space-y-3 text-sm">
+
+                        {scholarship.state && (
+
+                          <div className="flex justify-between gap-4">
+
+                            <span className="text-slate-500">
+                              State
+                            </span>
+
+                            <span className="text-right font-semibold text-slate-200">
+                              {scholarship.state}
+                            </span>
+
+                          </div>
+
+                        )}
+
+                        {scholarship.category && (
+
+                          <div className="flex justify-between gap-4">
+
+                            <span className="text-slate-500">
+                              Category
+                            </span>
+
+                            <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-semibold text-slate-300">
+                              {scholarship.category}
+                            </span>
+
+                          </div>
+
+                        )}
+
+                        {scholarship.course && (
+
+                          <div className="flex justify-between gap-4">
+
+                            <span className="text-slate-500">
+                              Course
+                            </span>
+
+                            <span className="text-right font-semibold text-slate-200">
+                              {scholarship.course}
+                            </span>
+
+                          </div>
+
+                        )}
+
+                        {scholarship.year && (
+
+                          <div className="flex justify-between gap-4">
+
+                            <span className="text-slate-500">
+                              Academic Year
+                            </span>
+
+                            <span className="font-semibold text-slate-200">
+                              {scholarship.year}
+                            </span>
+
+                          </div>
+
+                        )}
+
+                        {scholarship.minPercentage != null && (
+
+                          <div className="flex justify-between gap-4">
+
+                            <span className="text-slate-500">
+                              Minimum Score
+                            </span>
+
+                            <span className="font-bold text-blue-400">
+                              {scholarship.minPercentage}%
+                            </span>
+
+                          </div>
+
+                        )}
+
+                        {scholarship.maxIncome != null && (
+
+                          <div className="flex justify-between gap-4">
+
+                            <span className="text-slate-500">
+                              Income Limit
+                            </span>
+
+                            <span className="font-semibold text-slate-200">
+                              ₹
+                              {scholarship.maxIncome.toLocaleString(
+                                "en-IN"
+                              )}
+                            </span>
+
+                          </div>
+
+                        )}
+
+                      </div>
+
+                      {/* DEADLINE */}
+
+                      {scholarship.deadline && (
+
+                        <div className="mt-5 rounded-xl border border-amber-400/15 bg-amber-500/5 px-4 py-3">
+
+                          <p className="text-xs font-semibold text-amber-400">
+                            Application Deadline
+                          </p>
+
+                          <p className="mt-1 text-sm font-bold text-amber-300">
+                            {new Date(
+                              scholarship.deadline
+                            ).toLocaleDateString("en-IN")}
+                          </p>
+
+                        </div>
+
+                      )}
+
+                      {/* APPLY BUTTON */}
+
+                      {scholarship.applicationLink && (
+
+                        <a
+                          href={scholarship.applicationLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-6 flex w-full items-center justify-center rounded-xl bg-blue-500 px-4 py-3 text-sm font-bold text-white transition hover:bg-blue-400 hover:shadow-lg hover:shadow-blue-500/10"
+                        >
+                          Apply Now →
+                        </a>
+
                       )}
 
                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-900">
-                      {scholarship.title}
-                    </h3>
+                  </article>
 
-                    <p className="mt-1 font-medium text-blue-600">
-                      {scholarship.provider}
-                    </p>
-
-                    {scholarship.description && (
-                      <p className="mt-3 text-sm leading-6 text-gray-600">
-                        {scholarship.description}
-                      </p>
-                    )}
-
-                    <div className="mt-5 space-y-2 text-sm text-gray-600">
-
-                      {scholarship.state && (
-                        <p>
-                          📍 <strong>State:</strong>{" "}
-                          {scholarship.state}
-                        </p>
-                      )}
-
-                      {scholarship.category && (
-                        <p>
-                          👤 <strong>Category:</strong>{" "}
-                          {scholarship.category}
-                        </p>
-                      )}
-
-                      {scholarship.course && (
-                        <p>
-                          📚 <strong>Course:</strong>{" "}
-                          {scholarship.course}
-                        </p>
-                      )}
-
-                      {scholarship.year && (
-                        <p>
-                          📅 <strong>Year:</strong>{" "}
-                          {scholarship.year}
-                        </p>
-                      )}
-
-                      {scholarship.minPercentage != null && (
-                        <p>
-                          📊 <strong>Minimum:</strong>{" "}
-                          {scholarship.minPercentage}%
-                        </p>
-                      )}
-
-                      {scholarship.maxIncome != null && (
-                        <p>
-                          💰 <strong>Max Income:</strong>{" "}
-                          ₹
-                          {scholarship.maxIncome.toLocaleString(
-                            "en-IN"
-                          )}
-                        </p>
-                      )}
-
-                    </div>
-
-                    {scholarship.applicationLink && (
-                      <a
-                        href={scholarship.applicationLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-6 block rounded-xl bg-blue-600 py-3 text-center font-semibold text-white transition hover:bg-blue-700"
-                      >
-                        Apply Now →
-                      </a>
-                    )}
-
-                  </div>
                 ))}
 
               </div>
+
             )}
 
-          </div>
+          </section>
+
         )}
 
-      </div>
+      </main>
+
     </div>
   );
 }

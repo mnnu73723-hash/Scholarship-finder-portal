@@ -15,11 +15,16 @@ import {
   LogIn,
   UserPlus,
   LogOut,
+  ChevronRight,
 } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // =========================
+  // LOGOUT
+  // =========================
 
   const handleLogout = async () => {
     if (loading) return;
@@ -49,254 +54,267 @@ export default function Navbar() {
     }
   };
 
+  // =========================
+  // CLOSE MENU
+  // =========================
+
   const closeMenu = () => {
     setIsOpen(false);
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-indigo-100 bg-white/95 shadow-lg backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full max-w-full overflow-x-hidden border-b border-slate-800/80 bg-slate-950/95 shadow-xl shadow-black/10 backdrop-blur-xl">
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* ========================= */}
+      {/* FULL WIDTH CONTAINER */}
+      {/* ========================= */}
 
-        {/* ================= HEADER ================= */}
+      <div className="w-full max-w-full overflow-hidden px-4 sm:px-6 lg:px-8 xl:px-10">
 
-        <div className="flex h-[76px] items-center justify-between">
+        {/* ========================= */}
+        {/* HEADER */}
+        {/* ========================= */}
 
-          {/* ================= LOGO ================= */}
+        <div className="flex h-[76px] w-full min-w-0 items-center gap-4">
+
+          {/* ========================= */}
+          {/* LOGO */}
+          {/* ========================= */}
 
           <Link
             href="/"
-            className="group flex items-center gap-3"
+            onClick={closeMenu}
+            className="group flex shrink-0 items-center gap-3"
           >
+            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600 shadow-lg shadow-blue-600/25 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-500 group-hover:shadow-blue-500/40">
 
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 shadow-md transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl">
               <GraduationCap
-                className="h-7 w-7 text-white"
-                strokeWidth={2.5}
+                className="h-6 w-6 text-white"
+                strokeWidth={2.3}
               />
+
+              <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border-2 border-slate-950 bg-emerald-400" />
+
             </div>
 
-            <div className="hidden sm:block">
-              <h1 className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-2xl font-extrabold tracking-tight text-transparent">
-                ScholarFind
+            <div className="hidden min-w-0 sm:block">
+              <h1 className="whitespace-nowrap text-xl font-extrabold tracking-tight text-white">
+                Scholar<span className="text-blue-500">Find</span>
               </h1>
 
-              <p className="text-[11px] font-medium text-gray-500">
-                Find Your Dream Scholarship
+              <p className="whitespace-nowrap text-[10px] font-medium tracking-wide text-slate-500">
+                SCHOLARSHIP DISCOVERY PORTAL
               </p>
             </div>
-
           </Link>
 
-          {/* ================= DESKTOP MENU ================= */}
+          {/* ========================= */}
+          {/* DESKTOP MENU */}
+          {/* ========================= */}
 
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex">
 
-            <Link
+            <NavItem
               href="/"
-              className="group flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600"
-            >
-              <Home className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-              Home
-            </Link>
+              icon={<Home className="h-4 w-4" />}
+              label="Home"
+            />
 
-            <Link
+            <NavItem
               href="/pages/dashboard"
-              className="group flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600"
-            >
-              <LayoutDashboard className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-              Dashboard
-            </Link>
+              icon={<LayoutDashboard className="h-4 w-4" />}
+              label="Dashboard"
+            />
 
-            <Link
+            <NavItem
               href="/pages/scholarships"
-              className="group flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-purple-50 hover:text-purple-600"
-            >
-              <Award className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-              Scholarships
-            </Link>
+              icon={<Award className="h-4 w-4" />}
+              label="Scholarships"
+            />
 
-            <Link
+            <NavItem
               href="/pages/eligibility"
-              className="group flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-green-50 hover:text-green-600"
-            >
-              <ShieldCheck className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-              Eligibility
-            </Link>
+              icon={<ShieldCheck className="h-4 w-4" />}
+              label="Eligibility"
+            />
 
-            <Link
+            <NavItem
               href="/about"
-              className="group flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-orange-50 hover:text-orange-600"
-            >
-              <Info className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-              About
-            </Link>
+              icon={<Info className="h-4 w-4" />}
+              label="About"
+            />
 
-            <Link
+            <NavItem
               href="/contact"
-              className="group flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-gray-600 transition-all duration-200 hover:bg-pink-50 hover:text-pink-600"
-            >
-              <Mail className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-              Contact
-            </Link>
+              icon={<Mail className="h-4 w-4" />}
+              label="Contact"
+            />
 
           </div>
 
-          {/* ================= DESKTOP BUTTONS ================= */}
+          {/* ========================= */}
+          {/* DESKTOP ACTIONS */}
+          {/* ========================= */}
 
-          <div className="hidden items-center gap-2 lg:flex">
+          <div className="hidden shrink-0 items-center gap-2 xl:flex">
 
-            {/* Login */}
+            {/* LOGIN */}
 
             <Link
               href="/pages/login"
-              className="group flex items-center gap-2 rounded-xl border-2 border-blue-600 bg-white px-4 py-2.5 text-sm font-bold text-blue-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-600 hover:text-white hover:shadow-lg"
+              className="group flex shrink-0 items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-blue-500 hover:bg-blue-600 hover:text-white"
             >
-              <LogIn className="h-4 w-4" />
+              <LogIn className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+
               Login
             </Link>
 
-            {/* Register */}
+            {/* REGISTER */}
 
             <Link
               href="/pages/register"
-              className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:from-indigo-600 hover:to-purple-600 hover:shadow-xl"
+              className="group flex shrink-0 items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-200 hover:bg-blue-500 hover:shadow-blue-500/30"
             >
-              <UserPlus className="h-4 w-4" />
+              <UserPlus className="h-4 w-4 shrink-0" />
+
               Register
+
+              <ChevronRight className="h-3.5 w-3.5 shrink-0 transition-transform group-hover:translate-x-0.5" />
             </Link>
 
-            {/* Logout */}
+            {/* LOGOUT */}
 
             <button
               type="button"
               onClick={handleLogout}
               disabled={loading}
-              className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-rose-600 px-4 py-2.5 text-sm font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:from-red-600 hover:to-rose-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+              className="group flex shrink-0 items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-2.5 text-sm font-semibold text-red-400 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
             >
-              <LogOut className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              <LogOut className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
 
               {loading ? "Logging out..." : "Logout"}
             </button>
 
           </div>
 
-          {/* ================= MOBILE BUTTON ================= */}
+          {/* ========================= */}
+          {/* TABLET / MOBILE BUTTON */}
+          {/* ========================= */}
 
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 p-2.5 text-white shadow-md transition-all hover:scale-105 hover:shadow-lg lg:hidden"
+            className="ml-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-700 bg-slate-900 text-slate-200 transition hover:border-blue-500 hover:bg-blue-600 hover:text-white xl:hidden"
             aria-label="Toggle menu"
+            aria-expanded={isOpen}
           >
             {isOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 w-5" />
             )}
           </button>
 
         </div>
 
-        {/* ================= MOBILE MENU ================= */}
+        {/* ========================= */}
+        {/* MOBILE MENU */}
+        {/* ========================= */}
 
         {isOpen && (
-          <div className="border-t border-indigo-100 py-5 lg:hidden">
+          <div className="border-t border-slate-800 py-4 xl:hidden">
 
-            <div className="flex flex-col gap-2">
+            <div className="space-y-1">
 
-              <Link
+              <MobileNavItem
                 href="/"
+                icon={<Home className="h-5 w-5" />}
+                label="Home"
                 onClick={closeMenu}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-700 transition hover:bg-blue-50 hover:text-blue-600"
-              >
-                <Home className="h-5 w-5" />
-                Home
-              </Link>
+              />
 
-              <Link
+              <MobileNavItem
                 href="/pages/dashboard"
+                icon={<LayoutDashboard className="h-5 w-5" />}
+                label="Dashboard"
                 onClick={closeMenu}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-700 transition hover:bg-indigo-50 hover:text-indigo-600"
-              >
-                <LayoutDashboard className="h-5 w-5" />
-                Dashboard
-              </Link>
+              />
 
-              <Link
+              <MobileNavItem
                 href="/pages/scholarships"
+                icon={<Award className="h-5 w-5" />}
+                label="Scholarships"
                 onClick={closeMenu}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-700 transition hover:bg-purple-50 hover:text-purple-600"
-              >
-                <Award className="h-5 w-5" />
-                Scholarships
-              </Link>
+              />
 
-              <Link
-                href="/eligibility"
+              <MobileNavItem
+                href="/pages/eligibility"
+                icon={<ShieldCheck className="h-5 w-5" />}
+                label="Eligibility"
                 onClick={closeMenu}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-700 transition hover:bg-green-50 hover:text-green-600"
-              >
-                <ShieldCheck className="h-5 w-5" />
-                Eligibility Checker
-              </Link>
+              />
 
-              <Link
+              <MobileNavItem
                 href="/about"
+                icon={<Info className="h-5 w-5" />}
+                label="About"
                 onClick={closeMenu}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-700 transition hover:bg-orange-50 hover:text-orange-600"
-              >
-                <Info className="h-5 w-5" />
-                About
-              </Link>
+              />
 
-              <Link
+              <MobileNavItem
                 href="/contact"
+                icon={<Mail className="h-5 w-5" />}
+                label="Contact"
                 onClick={closeMenu}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-gray-700 transition hover:bg-pink-50 hover:text-pink-600"
-              >
-                <Mail className="h-5 w-5" />
-                Contact
-              </Link>
+              />
 
-              {/* Mobile Login */}
+            </div>
+
+            {/* ========================= */}
+            {/* MOBILE ACTIONS */}
+            {/* ========================= */}
+
+            <div className="mt-4 grid gap-2 border-t border-slate-800 pt-4">
+
+              {/* LOGIN */}
 
               <Link
                 href="/pages/login"
                 onClick={closeMenu}
-                className="mt-3 flex items-center justify-center gap-2 rounded-xl border-2 border-blue-600 py-3 font-bold text-blue-600 transition hover:bg-blue-600 hover:text-white"
+                className="flex items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-900 py-3 text-sm font-semibold text-slate-200 transition hover:border-blue-500 hover:bg-blue-600 hover:text-white"
               >
-                <LogIn className="h-5 w-5" />
+                <LogIn className="h-4 w-4" />
+
                 Login
               </Link>
 
-              {/* Mobile Register */}
+              {/* REGISTER */}
 
               <Link
                 href="/pages/register"
                 onClick={closeMenu}
-                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3 font-bold text-white shadow-md transition hover:from-indigo-600 hover:to-purple-600"
+                className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
               >
-                <UserPlus className="h-5 w-5" />
-                Register
+                <UserPlus className="h-4 w-4" />
+
+                Create Account
               </Link>
 
-              {/* Mobile Logout */}
+              {/* LOGOUT */}
 
               <button
                 type="button"
                 onClick={handleLogout}
                 disabled={loading}
-                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-rose-600 py-3 font-bold text-white shadow-md transition hover:from-red-600 hover:to-rose-700 disabled:opacity-50"
+                className="flex items-center justify-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 py-3 text-sm font-semibold text-red-400 transition hover:bg-red-500 hover:text-white disabled:opacity-50"
               >
-                <LogOut className="h-5 w-5" />
+                <LogOut className="h-4 w-4" />
 
-                {loading
-                  ? "Logging out..."
-                  : "Logout"}
+                {loading ? "Logging out..." : "Logout"}
               </button>
 
             </div>
+
           </div>
         )}
 
@@ -304,3 +322,420 @@ export default function Navbar() {
     </nav>
   );
 }
+
+/* ========================================================= */
+/* DESKTOP NAV ITEM */
+/* ========================================================= */
+
+function NavItem({
+  href,
+  icon,
+  label,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group flex shrink-0 items-center gap-2 rounded-lg px-2.5 py-2.5 text-sm font-medium text-slate-400 transition-all duration-200 hover:bg-slate-900 hover:text-white 2xl:px-3"
+    >
+      <span className="text-slate-500 transition-colors group-hover:text-blue-400">
+        {icon}
+      </span>
+
+      <span className="whitespace-nowrap">
+        {label}
+      </span>
+    </Link>
+  );
+}
+
+/* ========================================================= */
+/* MOBILE NAV ITEM */
+/* ========================================================= */
+
+function MobileNavItem({
+  href,
+  icon,
+  label,
+  onClick,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className="group flex w-full items-center justify-between rounded-lg border border-transparent px-4 py-3 text-sm font-medium text-slate-300 transition-all hover:border-slate-800 hover:bg-slate-900 hover:text-white"
+    >
+      <span className="flex items-center gap-3">
+        <span className="text-slate-500 transition-colors group-hover:text-blue-400">
+          {icon}
+        </span>
+
+        {label}
+      </span>
+
+      <ChevronRight className="h-4 w-4 text-slate-700 transition-all group-hover:translate-x-1 group-hover:text-blue-400" />
+    </Link>
+  );
+}
+
+
+// "use client";
+
+// import Link from "next/link";
+// import { useState } from "react";
+// import {
+//   Menu,
+//   X,
+//   GraduationCap,
+//   Home,
+//   LayoutDashboard,
+//   Award,
+//   ShieldCheck,
+//   Info,
+//   Mail,
+//   LogIn,
+//   UserPlus,
+//   LogOut,
+//   ChevronRight,
+// } from "lucide-react";
+
+// export default function Navbar() {
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [loading, setLoading] = useState(false);
+
+//   const handleLogout = async () => {
+//     if (loading) return;
+
+//     try {
+//       setLoading(true);
+
+//       const res = await fetch("/api/logout", {
+//         method: "POST",
+//         credentials: "include",
+//       });
+
+//       const data = await res.json();
+
+//       if (!res.ok || !data.success) {
+//         alert(data.message || "Logout failed.");
+//         setLoading(false);
+//         return;
+//       }
+
+//       setIsOpen(false);
+//       window.location.href = "/pages/login";
+//     } catch (error) {
+//       console.error("Logout Error:", error);
+//       alert("Unable to logout. Please try again.");
+//       setLoading(false);
+//     }
+//   };
+
+//   const closeMenu = () => {
+//     setIsOpen(false);
+//   };
+
+//   return (
+//     <nav className="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/95 shadow-xl shadow-black/10 backdrop-blur-xl">
+
+//      <div className="w-full px-5 sm:px-8 lg:px-10 xl:px-14">
+
+//         {/* ================= HEADER ================= */}
+
+//         <div className="flex h-[76px] w-full items-center gap-6">
+//           {/* ================= LOGO ================= */}
+
+//           <Link
+//             href="/"
+//             onClick={closeMenu}
+//             className="group flex items-center gap-3"
+//           >
+//             <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 shadow-lg shadow-blue-600/25 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-500 group-hover:shadow-blue-500/40">
+
+//               <GraduationCap
+//                 className="h-6 w-6 text-white"
+//                 strokeWidth={2.3}
+//               />
+
+//               <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border-2 border-slate-950 bg-emerald-400" />
+//             </div>
+
+//             <div className="hidden sm:block">
+//               <h1 className="text-xl font-extrabold tracking-tight text-white">
+//                 Scholar<span className="text-blue-500">Find</span>
+//               </h1>
+
+//               <p className="text-[10px] font-medium tracking-wide text-slate-500">
+//                 SCHOLARSHIP DISCOVERY PORTAL
+//               </p>
+//             </div>
+//           </Link>
+
+//           {/* ================= DESKTOP MENU ================= */}
+
+//        <div className="group flex items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-slate-400 transition-all duration-200 hover:bg-slate-900 hover:text-white">
+
+//             <NavItem
+//               href="/"
+//               icon={<Home className="h-4 w-4" />}
+//               label="Home"
+//             />
+
+//             <NavItem
+//               href="/pages/dashboard"
+//               icon={<LayoutDashboard className="h-4 w-4" />}
+//               label="Dashboard"
+//             />
+
+//             <NavItem
+//               href="/pages/scholarships"
+//               icon={<Award className="h-4 w-4" />}
+//               label="Scholarships"
+//             />
+
+//             <NavItem
+//               href="/pages/eligibility"
+//               icon={<ShieldCheck className="h-4 w-4" />}
+//               label="Eligibility"
+//             />
+
+//             <NavItem
+//               href="/about"
+//               icon={<Info className="h-4 w-4" />}
+//               label="About"
+//             />
+
+//             <NavItem
+//               href="/contact"
+//               icon={<Mail className="h-4 w-4" />}
+//               label="Contact"
+//             />
+
+//           </div>
+
+//           {/* ================= DESKTOP ACTIONS ================= */}
+
+//           <div className="hidden items-center gap-2 lg:flex">
+
+//             {/* LOGIN */}
+
+//             <Link
+//               href="/pages/login"
+//               className="group flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-blue-500 hover:bg-blue-600 hover:text-white"
+//             >
+//               <LogIn className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+
+//               Login
+//             </Link>
+
+//             {/* REGISTER */}
+
+//             <Link
+//               href="/pages/register"
+//               className="group flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-200 hover:bg-blue-500 hover:shadow-blue-500/30"
+//             >
+//               <UserPlus className="h-4 w-4" />
+
+//               Register
+
+//               <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+//             </Link>
+
+//             {/* LOGOUT */}
+
+//             <button
+//               type="button"
+//               onClick={handleLogout}
+//               disabled={loading}
+//               className="group flex items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-2.5 text-sm font-semibold text-red-400 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+//             >
+//               <LogOut className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+
+//               {loading ? "Logging out..." : "Logout"}
+//             </button>
+
+//           </div>
+
+//           {/* ================= MOBILE BUTTON ================= */}
+
+//           <button
+//             type="button"
+//             onClick={() => setIsOpen(!isOpen)}
+//             className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-700 bg-slate-900 text-slate-200 transition hover:border-blue-500 hover:bg-blue-600 hover:text-white lg:hidden"
+//             aria-label="Toggle menu"
+//           >
+//             {isOpen ? (
+//               <X className="h-5 w-5" />
+//             ) : (
+//               <Menu className="h-5 w-5" />
+//             )}
+//           </button>
+
+//         </div>
+
+//         {/* ================= MOBILE MENU ================= */}
+
+//         {isOpen && (
+//           <div className="border-t border-slate-800 py-4 lg:hidden">
+
+//             <div className="space-y-1">
+
+//               <MobileNavItem
+//                 href="/"
+//                 icon={<Home className="h-5 w-5" />}
+//                 label="Home"
+//                 onClick={closeMenu}
+//               />
+
+//               <MobileNavItem
+//                 href="/pages/dashboard"
+//                 icon={<LayoutDashboard className="h-5 w-5" />}
+//                 label="Dashboard"
+//                 onClick={closeMenu}
+//               />
+
+//               <MobileNavItem
+//                 href="/pages/scholarships"
+//                 icon={<Award className="h-5 w-5" />}
+//                 label="Scholarships"
+//                 onClick={closeMenu}
+//               />
+
+//               <MobileNavItem
+//                 href="/pages/eligibility"
+//                 icon={<ShieldCheck className="h-5 w-5" />}
+//                 label="Eligibility"
+//                 onClick={closeMenu}
+//               />
+
+//               <MobileNavItem
+//                 href="/about"
+//                 icon={<Info className="h-5 w-5" />}
+//                 label="About"
+//                 onClick={closeMenu}
+//               />
+
+//               <MobileNavItem
+//                 href="/contact"
+//                 icon={<Mail className="h-5 w-5" />}
+//                 label="Contact"
+//                 onClick={closeMenu}
+//               />
+
+//             </div>
+
+//             {/* MOBILE ACTIONS */}
+
+//             <div className="mt-4 grid gap-2 border-t border-slate-800 pt-4">
+
+//               <Link
+//                 href="/pages/login"
+//                 onClick={closeMenu}
+//                 className="flex items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-900 py-3 text-sm font-semibold text-slate-200 transition hover:border-blue-500 hover:bg-blue-600 hover:text-white"
+//               >
+//                 <LogIn className="h-4 w-4" />
+
+//                 Login
+//               </Link>
+
+//               <Link
+//                 href="/pages/register"
+//                 onClick={closeMenu}
+//                 className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+//               >
+//                 <UserPlus className="h-4 w-4" />
+
+//                 Create Account
+//               </Link>
+
+//               <button
+//                 type="button"
+//                 onClick={handleLogout}
+//                 disabled={loading}
+//                 className="flex items-center justify-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 py-3 text-sm font-semibold text-red-400 transition hover:bg-red-500 hover:text-white disabled:opacity-50"
+//               >
+//                 <LogOut className="h-4 w-4" />
+
+//                 {loading ? "Logging out..." : "Logout"}
+//               </button>
+
+//             </div>
+
+//           </div>
+//         )}
+
+//       </div>
+//     </nav>
+//   );
+// }
+
+
+// /* ========================================================= */
+// /* DESKTOP NAV ITEM */
+// /* ========================================================= */
+
+// function NavItem({
+//   href,
+//   icon,
+//   label,
+// }: {
+//   href: string;
+//   icon: React.ReactNode;
+//   label: string;
+// }) {
+//   return (
+//     <Link
+//       href={href}
+//       className="group flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-400 transition-all duration-200 hover:bg-slate-900 hover:text-white"
+//     >
+//       <span className="text-slate-500 transition-colors group-hover:text-blue-400">
+//         {icon}
+//       </span>
+
+//       {label}
+//     </Link>
+//   );
+// }
+
+
+// /* ========================================================= */
+// /* MOBILE NAV ITEM */
+// /* ========================================================= */
+
+// function MobileNavItem({
+//   href,
+//   icon,
+//   label,
+//   onClick,
+// }: {
+//   href: string;
+//   icon: React.ReactNode;
+//   label: string;
+//   onClick: () => void;
+// }) {
+//   return (
+//     <Link
+//       href={href}
+//       onClick={onClick}
+//       className="group flex items-center justify-between rounded-lg border border-transparent px-4 py-3 text-sm font-medium text-slate-300 transition-all hover:border-slate-800 hover:bg-slate-900 hover:text-white"
+//     >
+//       <span className="flex items-center gap-3">
+//         <span className="text-slate-500 transition-colors group-hover:text-blue-400">
+//           {icon}
+//         </span>
+
+//         {label}
+//       </span>
+
+//       <ChevronRight className="h-4 w-4 text-slate-700 transition-all group-hover:translate-x-1 group-hover:text-blue-400" />
+//     </Link>
+//   );
+// }
